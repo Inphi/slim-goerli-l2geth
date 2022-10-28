@@ -4,7 +4,7 @@ services:
   verifier:
     deploy:
       replicas: 1
-    image: inphi/l2geth:debug-trace
+    image: local/l2geth:rosetta-tracer
     entrypoint: ./geth.sh
     env_file:
       - ./.env
@@ -26,5 +26,3 @@ services:
         target: /usr/local/bin/geth.sh
     extra_hosts:
       - "host.docker.internal:host-gateway"
-
-
