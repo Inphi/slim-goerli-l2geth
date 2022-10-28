@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  verifier:
+    deploy:
+      replicas: 1
+    image: inphi/l2geth:debug-trace
+    entrypoint: ./geth.sh
+    env_file:
+      - ./.env
+    environment:
+      ROLLUP_CLIENT_HTTP: http://host.docker.internal:7878
+      ROLLUP_BACKEND: 'l1'
+      ETH1_CTC_DEPLOYMENT_HEIGHT: 5619320
+      RETRIES: 60
+      ROLLUP_VERIFIER_ENABLE: 'true'
+    ports:
+      - ${VERIFIER_HTTP_PORT:-8547}:8545
+      - ${VERIFIER_WS_PORT:-8548}:8546
+    volumes:
+      - type: bind
+        source: ./goerli-genesis.json
+        target: /usr/local/bin/genesis.json
+      - type: bind
+        source: ./geth.sh
+        target: /usr/local/bin/geth.sh
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+
