@@ -38,4 +38,6 @@ exec geth \
   --unlock $BLOCK_SIGNER_ADDRESS \
   --mine \
   --miner.etherbase $BLOCK_SIGNER_ADDRESS \
+  --pprof \
+  --pprofaddr 0.0.0.0 \
   "$@"
